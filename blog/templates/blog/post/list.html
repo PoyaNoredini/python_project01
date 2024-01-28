@@ -1,0 +1,21 @@
+{% extends "blog/parent/base.html" %}
+{% load static %}
+
+{# With the help of these tags, we transfer all the information in the main "base" file,#}
+{#and with this, we can separate the parts of the program and use them in a single file. #}
+    {% block title %}   details {% endblock %}
+    {% block head %}
+        <link rel="stylesheet" type="text/css" href="{% static 'css/list.css' %}">
+    {% endblock %}
+
+{% block content %}
+<h1 class="test">post list</h1>
+    {% for post in posts %}
+        <a href="{{ post.get_absolute_urls }}">
+         {# We put a tag inside so that we can link each "post" and by clicking on each post,#}
+            {# it will lead us to the "details" page.  #}
+        <h2>  {{ post.author }} : {{ post.title }}</h2>
+        </a>
+    {% endfor %}
+{% include 'blog/partials/pagination.html' with page=page_obj %}
+{% endblock %}

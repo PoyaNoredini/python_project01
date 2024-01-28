@@ -1,0 +1,11 @@
+{% extends "blog/parent/base.html" %}
+
+{% block content %}
+    <h1 style="color: blue"> personal information form </h1>
+
+    <form method="post">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <input type="submit" value="Entry">
+    </form>
+{% endblock %}

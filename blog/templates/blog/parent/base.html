@@ -1,0 +1,19 @@
+{% load static %}{# Whenever we want to add a static file to an html file, we must first write ""load static""  #}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+{% block head %}{% endblock %}
+</head>
+<body>
+{% include "blog/partials/header.html" %}
+{% include "blog/partials/navigation.html" %}
+{# With the help of these tags, we transfer all the information in the main "base" file,#}
+{#and with this, we can separate the parts of the program and use them in a single file. #}
+{% block content %}
+
+{% endblock %}
+{% include "blog/partials/fooder.html" %}
+</body>
+</html>
