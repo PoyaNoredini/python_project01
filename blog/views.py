@@ -1,9 +1,10 @@
+from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .models import Post, Account
 from django.views.generic import ListView
+
 from .form import AccountForm
+from .models import Post, Account
 
 
 # Create your views here.
@@ -14,6 +15,7 @@ def index(request):
     return HttpResponse("welcome to the my blog ")
 
 
+"""
 def PostList(request):
     posts = Post.objects.filter(status='published')
 
@@ -31,6 +33,18 @@ def PostList(request):
         # If a page was empty, it will return to the last page of the post
 
     return render(request, 'blog/post/list.html', {'posts': posts, 'page': page})
+"""
+
+
+def PostList(request):
+    posts = Post.objects.filter(status='published')
+
+    paginator = Paginator(posts, 2)
+    page_number = request.GET.get('page')
+
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'blog/post/list.html', {'page_obj': page_obj})
 
 
 # This view class does all the work of the above function and the use of view classes
@@ -70,7 +84,8 @@ def UserAccount(request):
             account.save()
             return redirect('blog:index')
         else:
-            
+
             return render(request, 'blog/forms/account_form.html', {'form': form, 'account': account})
+
     form = AccountForm()
     return render(request, 'blog/forms/account_form.html', {'form': form})
