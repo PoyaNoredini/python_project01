@@ -3,13 +3,12 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-STATUS_CHOICES = [
-    ("draft", "Draft"),
-    ("published", "Published"),
-]
-
 
 class Post(models.Model):
+    STATUS_CHOICES = [
+        ("draft", "Draft"),
+        ("published", "Published"),
+    ]
     title = models.CharField(max_length=250)
     slug = models.SlugField(max_length=250, unique_for_date='publish')
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_post')
@@ -35,13 +34,11 @@ class Post(models.Model):
     #  create superuser command
 
 
-GENDER_CHOICES = [
-    ("woman", "Woman"),
-    ("man", "Man"),
-]
-
-
 class Account(models.Model):
+    GENDER_CHOICES = [
+        ("woman", "Woman"),
+        ("man", "Man"),
+    ]
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='account', null=True)
     phone_number = models.CharField(max_length=11, null=True, blank=True)
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES, default='woman')
